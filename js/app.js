@@ -1,5 +1,11 @@
+//"use strict";
 
 $(document).ready(function(){
+
+	  	//this randomNumber if what the user has to guess
+  	var randomNumber = Math.floor((Math.random()*100)+1)
+  	console.log(randomNumber);
+  	var guessesList = [];
 	
 	/*--- Display information modal box ---*/
   	$(".what").click(function(){
@@ -12,19 +18,14 @@ $(document).ready(function(){
   		$(".overlay").fadeOut(1000);
   	});
 
-  	//this randomNumber if what the user has to guess
-  	var randomNumber = Math.floor((Math.random()*100)+1)
-  	console.log(randomNumber);
-  	var guessesList = [];
 
-});
-//New Game
+  	/*---New Game---*/
 $(".new").on("click", function(){
 	randomNumber = Math.floor((Math.random()*100)+1);
 	console.log(randomNumber);
 	guessesList = [];
 });
-//Capture Guess
+	/*---Capture Guess---*/
 $("#guessButton").on("click", function(event){
 	event.preventDefault();
 	var userGuess = +($("#userGuess").val());
@@ -35,7 +36,8 @@ $("#guessButton").on("click", function(event){
 function verifyValue(value) {
 	console.log('verify value');
 	console.log(value);
-	if(isNaN(value)) {
+	//value = userGuess;
+	if (isNaN(value)) {
 		alert("Please enter Number");
 	}
 	else if (guessesList.indexOf(value) != -1){
@@ -45,7 +47,25 @@ function verifyValue(value) {
 		alert("Please enter a number betweem 1 and 100")
 	}
 	else{
-		//checkValue(value);
+		checkValue(value);
 		guessesList.push(value);
 	}
 }
+	/*---Check Guess---*/
+function checkValue(userGuess){
+	console.log(randomNumber);
+	console.log(userGuess);
+var numberDistance = Math.abs(userGuess - randomNumber);
+	console.log(numberDistance);
+if(userGuess==randomNumber) {
+	$("#feedback").text("You won!");
+}
+else if ( numberDistance<10 ) {
+	$("#feedback").text("HOT");
+}
+else {
+	$("#feedback").text("COLD");
+}
+}
+
+});
